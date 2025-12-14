@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,13 +11,18 @@
 
     :root {
       --font-sans: "PP Neue Montreal", sans-serif;
-      --font-mono: monospace;
-      --bg: #000;
-      --text: #fff;
-      --muted: rgba(255,255,255,0.75);
-      --panel: rgba(0,0,0,0.4);
-      --border: rgba(255,255,255,0.12);
-      --radius: 14px;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+      /* Ivory + Deep Brown Theme */
+      --bg: #f6f0e6;               /* 아이보리 배경 */
+      --text: #2a1d14;             /* 짙은 브라운 텍스트 */
+      --muted: rgba(42, 29, 20, 0.78);
+      --panel: rgba(255, 252, 246, 0.72);
+      --border: rgba(42, 29, 20, 0.14);
+      --hover: rgba(42, 29, 20, 0.06);
+      --accent: #5b3a24;           /* 포인트 브라운 */
+
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +35,7 @@
       overflow: hidden;
     }
 
-    /* ====== Layout ====== */
+    /* ====== UI ====== */
     .site-ui {
       position: absolute;
       inset: 0;
@@ -48,13 +54,15 @@
       font-family: var(--font-mono);
       letter-spacing: 1px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
+      color: var(--text);
     }
 
     .brand .tag {
       font-size: 11px;
-      opacity: 0.7;
+      opacity: 0.75;
       margin-top: 4px;
+      color: var(--muted);
     }
 
     .topbar {
@@ -83,13 +91,16 @@
       text-decoration: none;
       padding: 8px 12px;
       border-radius: 999px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
     }
 
     .nav a:hover {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
+      background: var(--hover);
+      color: var(--text);
+      transform: translateY(-1px);
     }
 
+    /* ====== CONTENT ====== */
     .content {
       position: absolute;
       top: 96px;
@@ -102,25 +113,32 @@
       border-radius: 18px;
       backdrop-filter: blur(18px);
       pointer-events: auto;
+      box-shadow: 0 18px 60px rgba(42, 29, 20, 0.10);
     }
 
     .hero {
       padding: 28px;
       border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,252,246,0.92), rgba(255,252,246,0.55));
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
     }
 
     .hero h1 {
       font-size: clamp(22px, 3vw, 34px);
       line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.2px;
     }
 
     .hero p {
       margin-top: 10px;
       font-family: var(--font-mono);
       font-size: 12px;
-      opacity: 0.7;
+      opacity: 0.75;
       letter-spacing: 0.6px;
       text-transform: uppercase;
+      color: var(--muted);
     }
 
     .grid {
@@ -132,7 +150,7 @@
 
     .card {
       grid-column: span 12;
-      background: rgba(0,0,0,0.35);
+      background: rgba(255, 252, 246, 0.78);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 20px;
@@ -143,6 +161,7 @@
       font-size: 12px;
       letter-spacing: 1px;
       margin-bottom: 10px;
+      color: var(--accent);
     }
 
     .card p {
@@ -151,23 +170,64 @@
       color: var(--muted);
     }
 
-    /* ====== IMAGE GRID (NEW) ====== */
+    /* ====== IMAGE GRID ====== */
     .about-images {
       margin-top: 18px;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
+      align-items: start;
     }
 
+    /* ✅ 요청사항 1: 이미지 가로사이즈 600px */
     .about-images img {
-      width: 100%;
-      height: 100%;
+      width: 600px;
+      max-width: 100%;
+      height: auto;
       object-fit: cover;
       border-radius: 12px;
       border: 1px solid var(--border);
+      box-shadow: 0 10px 28px rgba(42, 29, 20, 0.10);
+      background: rgba(42, 29, 20, 0.03);
     }
 
-    @media (max-width: 768px) {
+    .note {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(42,29,20,0.6);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .section-links {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 252, 246, 0.9);
+      text-decoration: none;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .chip:hover {
+      background: var(--hover);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 820px) {
       .about-images {
         grid-template-columns: 1fr;
       }
@@ -176,8 +236,6 @@
 </head>
 
 <body>
-
-  <!-- ===== UI ===== -->
   <div class="site-ui">
     <div class="brand">
       <div class="logo">OLLA</div>
@@ -186,42 +244,98 @@
 
     <div class="topbar">
       <div class="nav">
-        <a href="#about">올라뷰티소개</a>
+        <a href="#about">올라뷰티</a>
         <a href="#academy">아카데미</a>
         <a href="#store">스토어</a>
         <a href="#support">고객센터</a>
       </div>
     </div>
 
-    <!-- ===== CONTENT ===== -->
     <div class="content">
       <div class="hero">
         <h1>Premium, Natural Results.<br />Designed for Your Face.</h1>
-        <p>Hairline • Brows • Scalp Micropigmentation • Education</p>
+        <p>Hairline • Brows • Scalp Micropigmentation • Education • Products</p>
       </div>
 
       <div class="grid">
 
-        <!-- ABOUT -->
-        <section class="card" id="about">
-          <h2>올라뷰티소개</h2>
+        <!-- ✅ 요청사항 2: 메인 화면에 3개 섹션 모두 표시 -->
 
+        <!-- OLLA BEAUTY -->
+        <section class="card" id="about">
+          <h2>올라뷰티</h2>
           <p>
             OLLA는 섬세한 디자인과 자연스러운 결과를 최우선으로 합니다.
             얼굴 구조, 비율, 흐름을 기반으로 정교하게 설계하고,
             케이스에 맞는 표현 기법으로 완성도를 끌어올립니다.
           </p>
 
-          <!-- 🔥 이미지 2장 추가된 영역 -->
           <div class="about-images">
             <img src="images/1.png" alt="OLLA Design Detail 1" />
             <img src="images/2.jpg" alt="OLLA Design Detail 2" />
+          </div>
+
+          <div class="section-links">
+            <a class="chip" href="#about">브랜드 소개</a>
+            <a class="chip" href="#about">시술 분야</a>
+            <a class="chip" href="#about">시술 후기</a>
+            <a class="chip" href="#about">시술 예약하기</a>
+            <a class="chip" href="#about">오시는 길</a>
+          </div>
+
+          <div class="note">Images: /images/1.png, /images/2.jpg</div>
+        </section>
+
+        <!-- OLLA ACADEMY -->
+        <section class="card" id="academy">
+          <h2>올라 아카데미</h2>
+          <p>
+            현장에서 바로 적용 가능한 디자인 설계부터 케이스별 표현 기법까지,
+            소수 정예 1:1 피드백 중심으로 커리큘럼을 운영합니다.
+          </p>
+
+          <div class="section-links">
+            <a class="chip" href="#academy">교육 현장</a>
+            <a class="chip" href="#academy">교육 후기</a>
+            <a class="chip" href="#academy">커리큘럼</a>
+            <a class="chip" href="#academy">강사진 소개</a>
+            <a class="chip" href="#academy">오시는 길</a>
+            <a class="chip" href="#academy">수강 문의하기</a>
+          </div>
+        </section>
+
+        <!-- STORE -->
+        <section class="card" id="store">
+          <h2>스토어</h2>
+          <p>
+            OLLA의 기준에 맞춘 제품만 큐레이션합니다.
+            (여기에 제품 이미지/상품 카드가 들어갈 예정입니다.)
+          </p>
+
+          <div class="section-links">
+            <a class="chip" href="#store">색소</a>
+            <a class="chip" href="#store">니들</a>
+          </div>
+        </section>
+
+        <!-- SUPPORT -->
+        <section class="card" id="support">
+          <h2>고객센터</h2>
+          <p>
+            공지사항, FAQ, 문의하기를 통해 빠르게 안내해드립니다.
+            (추후 폼/카카오 채널/이메일 연결 가능)
+          </p>
+
+          <div class="section-links">
+            <a class="chip" href="#support">공지사항</a>
+            <a class="chip" href="#support">FAQ</a>
+            <a class="chip" href="#support">문의하기</a>
           </div>
         </section>
 
       </div>
     </div>
   </div>
-
 </body>
 </html>
+```
